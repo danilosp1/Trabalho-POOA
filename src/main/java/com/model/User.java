@@ -30,14 +30,6 @@ public abstract class User {
         return id;
     }
 
-    public void login(){
-
-    }
-
-    public void logout(){
-
-    }
-
     public void changeAccount(){
 
     }

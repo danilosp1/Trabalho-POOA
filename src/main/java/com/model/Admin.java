@@ -5,7 +5,7 @@ import com.enums.GenderType;
 
 import java.sql.Blob;
 
-public class Admin extends User{
+public class Admin extends User {
     private NewSystemRequest[] newSystems;
 
     public Admin(String name, Blob picture, CourseType course, String ra, GenderType genre, int age, String description) {
