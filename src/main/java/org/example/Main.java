@@ -15,9 +15,14 @@ public class Main {
         p1.createCharacter("Asterius", 10, GenderType.HOMEM, 34, CharacterClassType.MAGO, RaceType.ELFO, null, "...");
         p1.createCharacter("Legolas", 10, GenderType.HOMEM, 200, CharacterClassType.GUERREIRO, RaceType.ELFO, null, "...");
         p1.createCharacter("Basneria", 10, GenderType.MULHER, 120, CharacterClassType.CURANDEIRO, RaceType.ELFO, null, "...");
+
+        System.out.println();
         p1.printSheetList();
 
+        System.out.println();
         p1.deleteCharacter();
+
+        System.out.println();
         p1.printSheetList();
     }
 }
