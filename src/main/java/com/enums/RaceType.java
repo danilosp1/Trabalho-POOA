@@ -1,6 +1,5 @@
 package com.enums;
 
 public enum RaceType {
-    ELFO,
-    HUMANO
+    HUMANO, ELFO, ANAO, ORC
 }

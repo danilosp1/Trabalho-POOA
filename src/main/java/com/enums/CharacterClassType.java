@@ -1,7 +1,5 @@
 package com.enums;
 
 public enum CharacterClassType {
-    MAGO,
-    CURANDEIRO,
-    GUERREIRO
+    GUERREIRO, MAGO, LADINO, CLERIGO, CURANDEIRO
 }

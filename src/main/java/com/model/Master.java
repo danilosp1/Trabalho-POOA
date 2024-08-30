@@ -9,8 +9,8 @@ public class Master extends User{
     private SystemRPG[] systemsList;
     private Campaign[] campaignList;
 
-    public Master(String name, Blob picture, CourseType course, String ra, GenderType genre, int age, String description) {
-        super(name, picture, course, ra, genre, age, description);
+    public Master(String name, CourseType course, String ra, GenderType genre, int age, String description) {
+        super(name, course, ra, genre, age, description);
         this.systemsList = new SystemRPG[0];
         this.campaignList = new Campaign[0];
     }

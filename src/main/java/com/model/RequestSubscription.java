@@ -6,10 +6,10 @@ import java.util.UUID;
 public class RequestSubscription {
     private UUID id;
     public CharacterSheet sheet;
-    public Date date;
+    public String date;
     public Campaign campaign;
 
-    public RequestSubscription(CharacterSheet sheet, Date date, Campaign campaign) {
+    public RequestSubscription(CharacterSheet sheet, String date, Campaign campaign) {
         this.id = UUID.randomUUID();
         this.sheet = sheet;
         this.date = date;
@@ -24,7 +24,7 @@ public class RequestSubscription {
         return sheet;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 

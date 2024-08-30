@@ -1,8 +1,5 @@
 package com.enums;
 
 public enum CourseType {
-    COMPUTER_SCIENCE,
-    MATH,
-    HISTORY,
-    BIOLOGY
+    ENGENHARIA, CIENCIAS, MATEMATICA, FISICA, LETRAS, DIREITO, CIENCIA_COMPUTACAO
 }

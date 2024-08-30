@@ -1,19 +1,19 @@
 package com.model;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 public class Session {
     private UUID id;
-    private Date date;
+    private String date;
     private String description;
-    private CharacterSheet[] characters;
+    private List<CharacterSheet> characters = new ArrayList<CharacterSheet>();
+    private boolean finished;
 
-    public Session(Date date, String description, CharacterSheet[] characters) {
+    public Session(String date, String description) {
         this.id = UUID.randomUUID();
         this.date = date;
         this.description = description;
-        this.characters = characters;
+        this.finished = false;
     }
 
     public boolean addCharacter(CharacterSheet characterSheet){
@@ -21,47 +21,47 @@ public class Session {
             return false;
         }
 
-        CharacterSheet[] newList = new CharacterSheet[characters.length + 1];
-        System.arraycopy(characters, 0, newList, 0, characters.length);
-        newList[characters.length] = characterSheet;
-        characters = newList;
+        characters.add(characterSheet);
         return true;
     }
 
     public boolean removeCharacter(CharacterSheet characterSheet) {
-        if (characterSheet == null) {
-            return false;
-        }
+        if (characterSheet != null && characters.contains(characterSheet)) {
+            characters.remove(characterSheet);
+            return true;
 
-        int index = -1;
-        for (int i = 0; i < characters.length; i++) {
-            if (characters[i].equals(characterSheet)) {
-                index = i;
-                break;
-            }
         }
+        return false;
+    }
 
-        if (index == -1) {
-            return false;
+    public void changeInfos(String newDate, String newDescription) {
+        if (newDate != null && !newDate.isEmpty()) {
+            this.setDate(newDate);
         }
-
-        CharacterSheet[] newList = new CharacterSheet[characters.length - 1];
-        System.arraycopy(characters, 0, newList, 0, index);
-        System.arraycopy(characters, index + 1, newList, index, characters.length - index - 1);
-        characters = newList;
-        return true;
+        if (newDescription != null && !newDescription.isEmpty()) {
+            this.setDescription(newDescription);
+        }
+        System.out.println("Informações da sessão alteradas com sucesso.");
     }
 
     public UUID getId() {
         return id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 
     public String getDescription() {
@@ -72,7 +72,7 @@ public class Session {
         this.description = description;
     }
 
-    public CharacterSheet[] getCharacters() {
+    public List<CharacterSheet> getCharacters() {
         return characters;
     }
 }

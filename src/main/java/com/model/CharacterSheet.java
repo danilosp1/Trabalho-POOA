@@ -14,11 +14,10 @@ public class CharacterSheet {
     private int age;
     private CharacterClassType characterClass;
     private RaceType race;
-    private Blob picture;
     private String description;
     private Player player;
 
-    public CharacterSheet(String name, int level, GenderType gender, int age, CharacterClassType characterClass, RaceType race, Blob picture, String description, Player player) {
+    public CharacterSheet(String name, int level, GenderType gender, int age, CharacterClassType characterClass, RaceType race, String description, Player player) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.level = level;
@@ -26,9 +25,14 @@ public class CharacterSheet {
         this.age = age;
         this.characterClass = characterClass;
         this.race = race;
-        this.picture = picture;
         this.description = description;
         this.player = player;
+    }
+
+    public String sheetInfos() {
+        return "Informações da Ficha: " + this.getName() + "\nNível: " + this.getLevel() + "\nGênero: " + this.getGender()
+                + "\nIdade: " + this.getAge() + "\nClasse: " + this.getCharacterClass() + "\nRaça: " + this.getRace() + "\nDescrição: "
+                + this.getDescription();
     }
 
     public UUID getId() {
@@ -57,10 +61,6 @@ public class CharacterSheet {
 
     public RaceType getRace() {
         return race;
-    }
-
-    public Blob getPicture() {
-        return picture;
     }
 
     public String getDescription() {
