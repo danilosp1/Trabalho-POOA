@@ -3,7 +3,6 @@ import com.enums.CharacterClassType;
 import com.enums.GenderType;
 import com.enums.RaceType;
 
-import java.sql.Blob;
 import java.util.UUID;
 
 public class CharacterSheet {

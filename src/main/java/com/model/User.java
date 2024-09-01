@@ -2,8 +2,6 @@ package com.model;
 import com.enums.CourseType;
 import com.enums.GenderType;
 
-import java.sql.Blob;
-import java.util.Date;
 import java.util.UUID;
 
 public abstract class User {

@@ -15,8 +15,28 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        main1();
+        main2();
+    }
+
+    private static void main1() {
+        Admin admin = new Admin("admin", CourseType.CIENCIA_COMPUTACAO, "811164", GenderType.MASCULINO, 20, "...");
+        Master master1 = new Master("master1", CourseType.CIENCIAS, "873182", GenderType.MASCULINO, 18, "...");
+        Player player1 = new Player("player1", CourseType.DIREITO, "424155", GenderType.FEMININO, 22, "...");
+        Player player2 = new Player("player2", CourseType.ENGENHARIA, "744556", GenderType.FEMININO, 30, "...");
+        Player player3 = new Player("player3", CourseType.FISICA, "955665", GenderType.MASCULINO, 17, "...");
+
+        SystemRPG system1 = new SystemRPG("sistema1", "...");
+        SystemRPG system2 = new SystemRPG("sistema2", "...");
+
+        Campaign c1 = new Campaign("campanha1", 10, 5, master1, 3, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", system1);
+        Campaign c2 = new Campaign("campanha2", 20, 10, master1, 5, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", system2);
+    }
+
+    private static void main2() {
         int opcao;
         do {
+            System.out.println();
             exibirMenuPrincipal();
             opcao = scanner.nextInt();
             scanner.nextLine();
@@ -27,8 +47,6 @@ public class Main {
                     break;
                 case 2:
                     loginUser();
-                    break;
-                case 3:
                     if (usuarioLogado instanceof Admin) {
                         menuAdmin();
                     } else if (usuarioLogado instanceof Player) {
@@ -53,7 +71,6 @@ public class Main {
         System.out.println("=== Menu Principal ===");
         System.out.println("1. Criar usuário");
         System.out.println("2. Login");
-        System.out.println("3. Ações do usuário logado");
         System.out.println("0. Sair");
         System.out.print("Escolha uma opção: ");
     }
@@ -82,11 +99,11 @@ public class Main {
     }
 
     private static void loginUser() {
-        System.out.print("Digite o ID do usuário: ");
-        String id = scanner.nextLine();
+        System.out.print("Digite o RA do usuário: ");
+        String ra = scanner.nextLine();
 
         for (User usuario : usuarios) {
-            if (usuario.getId().toString().equals(id)) {
+            if (usuario.getRa().equals(ra)) {
                 usuarioLogado = usuario;
                 System.out.println("Login realizado com sucesso!");
                 return;
@@ -98,6 +115,7 @@ public class Main {
     private static void menuAdmin() {
         int opcao;
         do {
+            System.out.println();
             System.out.println("=== Menu Admin ===");
             System.out.println("1. Criar sistema RPG");
             System.out.println("2. Deletar sistema RPG");
@@ -172,6 +190,7 @@ public class Main {
     private static void menuPlayer() {
         int opcao;
         do {
+            System.out.println();
             System.out.println("=== Menu Player ===");
             System.out.println("1. Criar ficha de personagem");
             System.out.println("2. Solicitar inscrição em campanha");

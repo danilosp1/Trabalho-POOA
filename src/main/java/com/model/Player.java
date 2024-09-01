@@ -6,14 +6,11 @@ import com.enums.GenderType;
 import com.enums.RaceType;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Scanner;
-import java.sql.Blob;
 
 public class Player extends User {
     private List<CharacterSheet> sheetsList = new ArrayList<>();
-    private List<SystemRPG> systemsList = new ArrayList<>();
+    private List<Campaign> campaignList = new ArrayList<>();
 
     public Player(String name, CourseType course, String ra, GenderType genre, int age, String description) {
         super(name, course, ra, genre, age, description);
@@ -40,9 +37,22 @@ public class Player extends User {
         return sheetsList;
     }
 
-    public List<SystemRPG> getSystemRPG() {
-        return systemsList;
+
+    // Caso de uso: Gerenciamento de Campanha do Player
+
+    public List<Campaign> getSystemRPG() {
+        return campaignList;
     }
+
+    public void addCampaing(Campaign campaign) {
+        campaignList.add(campaign);
+    }
+
+    public void removeCampaing(Campaign campaign) {
+        campaignList.remove(campaign);
+    }
+
+
 
     public void printSheetList() {
         System.out.println(this.getName() + "'s characters sheet");

@@ -3,7 +3,6 @@ package com.model;
 import com.enums.CourseType;
 import com.enums.GenderType;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 

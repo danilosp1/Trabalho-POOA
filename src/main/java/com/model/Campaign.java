@@ -5,7 +5,6 @@ import com.interfaces.Observer;
 import com.interfaces.Subject;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +20,7 @@ public class Campaign implements Subject {
     private String startDate;
     private String endDate;
     private List<RequestSubscription> subscriptions = new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
     private List<CharacterSheet> characters = new ArrayList<>();
     private List<Session> sessions = new ArrayList<>();
     private Session currentSession;
@@ -247,5 +247,13 @@ public class Campaign implements Subject {
         for (Observer observer : observers) {
             observer.update();
         }
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
     }
 }

@@ -1,6 +1,5 @@
 package com.model;
 
-import java.util.Date;
 
 public class NewSystemRequest {
     private String date;
