@@ -26,11 +26,50 @@ public class Main {
         Player player2 = new Player("player2", CourseType.ENGENHARIA, "744556", GenderType.FEMININO, 30, "...");
         Player player3 = new Player("player3", CourseType.FISICA, "955665", GenderType.MASCULINO, 17, "...");
 
-        SystemRPG system1 = new SystemRPG("sistema1", "...");
-        SystemRPG system2 = new SystemRPG("sistema2", "...");
+        usuarios.add(admin);
+        usuarios.add(master1);
+        usuarios.add(player2);
+        usuarios.add(player3);
+        Admin.setUsuarios(usuarios);
 
-        Campaign c1 = new Campaign("campanha1", 10, 5, master1, 3, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", system1);
-        Campaign c2 = new Campaign("campanha2", 20, 10, master1, 5, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", system2);
+        SystemRPG sistema1 = new SystemRPG("sistema1", "...");
+        SystemRPG sistema2 = new SystemRPG("sistema2", "...");
+
+        sistemasDisponiveis.add(sistema1);
+        sistemasDisponiveis.add(sistema2);
+
+
+        Campaign c1 = new Campaign("campanha1", 10, 5, master1, 3, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", sistema1);
+        Campaign c2 = new Campaign("campanha2", 20, 10, master1, 5, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", sistema2);
+        campanhas.add(c1);
+        campanhas.add(c2);
+
+
+        Admin.setAvailableSystems(sistemasDisponiveis);
+        Admin.setAvailableCampaign(campanhas);
+        Admin.printAvailableCampaign();
+        Admin.printAvailableSystems();
+
+        Admin.deleteCampaign(c1);
+        Admin.deleteSystem(sistema1);
+        Admin.printAvailableCampaign();
+        Admin.printAvailableSystems();
+
+
+
+        master1.createCampaign(c1);
+        master1.createCampaign(c2);
+        master1.changeStatus(c1, StatusType.FINALIZADA);
+        master1.deleteCampaign(c1);
+        c1.printAllPlayers();
+
+
+
+
+
+        player1.addCampaing(c1);
+        player1.addCampaing(c2);
+
     }
 
     private static void main2() {
@@ -152,10 +191,10 @@ public class Main {
         System.out.print("Digite as regras do sistema RPG: ");
         String regras = scanner.nextLine();
 
-        SystemRPG sistemaRPG = new SystemRPG(nome, regras);
-        sistemasDisponiveis.add(sistemaRPG);
+        SystemRPG sistema = new SystemRPG(nome, regras);
+        sistemasDisponiveis.add(sistema);
 
-        ((Admin) usuarioLogado).createSystem(sistemaRPG);
+        ((Admin) usuarioLogado).createSystem(sistema);
     }
 
     private static void deletarSystemRPG() {

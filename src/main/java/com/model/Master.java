@@ -37,7 +37,7 @@ public class Master extends User{
 
     public void changeCampaign(){}
 
-    public List<Campaign> getCampaign() {
+    public List<Campaign> getCampaignList() {
         return campaignList;
     }
 }
