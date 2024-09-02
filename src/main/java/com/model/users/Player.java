@@ -4,13 +4,14 @@ import com.enums.CharacterClassType;
 import com.enums.CourseType;
 import com.enums.GenderType;
 import com.enums.RaceType;
+import com.interfaces.Observer;
 import com.model.Campaign;
 import com.model.CharacterSheet;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player extends User {
+public class Player extends User implements Observer {
     private List<CharacterSheet> sheetsList = new ArrayList<>();
     private List<Campaign> campaignList = new ArrayList<>();
 
@@ -48,10 +49,16 @@ public class Player extends User {
 
     public void addCampaing(Campaign campaign) {
         campaignList.add(campaign);
+        campaign.addPlayer(this);
+
+        if (campaign.getMaster() != null) {
+            campaign.attach(campaign.getMaster());
+        }
     }
 
     public void removeCampaing(Campaign campaign) {
         campaignList.remove(campaign);
+        campaign.removePlayer(this);
     }
 
     public void printCampaign() {
@@ -81,5 +88,10 @@ public class Player extends User {
                     "; Race: " + sheet.getRace() +
                     "; Desciption: " + sheet.getDescription());
         });
+    }
+
+    @Override
+    public void update(String message) {
+        System.out.println("Jogador " + this.getName() + " foi notificado: " + message);
     }
 }

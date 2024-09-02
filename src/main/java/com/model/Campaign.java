@@ -41,6 +41,7 @@ public class Campaign implements Subject {
         this.startDate = startDate;
         this.endDate = endDate;
         this.systemRPG = systemRPG;
+        this.attach(master);
     }
 
     public void addSession(Session session) {
@@ -53,7 +54,6 @@ public class Campaign implements Subject {
         if (sessions.contains(session) && !session.isFinished()) {
             this.setStatus(StatusType.ATIVA);
             this.setCurrentSession(session);
-            notifyObservers();
             System.out.println("Sessão iniciada com sucesso para a campanha " + this.getName());
         } else {
             System.out.println("Erro: Sessão não encontrada ou já finalizada na campanha: " + this.getName());
@@ -78,7 +78,6 @@ public class Campaign implements Subject {
                 this.setSessionsNumber(sessionsNumber - 1);
             }
             session.setFinished(true);
-            notifyObservers();
         }
     }
 
@@ -100,6 +99,30 @@ public class Campaign implements Subject {
 
         characters.add(characterSheet);
         return true;
+    }
+
+    public void addPlayer(Player player) {
+        if (player == null) {
+            return;
+        }
+
+        players.add(player);
+        attach(player);  // Adiciona o jogador como observador
+        if (this.master != null) {
+            this.master.update("O jogador " + player.getName() + " entrou na campanha " + this.getName());
+        }
+    }
+
+    public boolean removePlayer(Player player) {
+        if (player != null && players.contains(player)) {
+            players.remove(player);
+            detach(player);  // Remove o jogador como observador
+            if (this.master != null) {
+                this.master.update("O jogador " + player.getName() + " saiu da campanha " + this.getName());
+            }
+            return true;
+        }
+        return false;
     }
 
     public boolean removeCharacter(CharacterSheet characterSheet) {
@@ -202,6 +225,7 @@ public class Campaign implements Subject {
 
     public void setStatus(StatusType status) {
         this.status = status;
+        notifyObservers("O status da campanha " + this.getName() + " mudou para " + this.getStatus() + ".");
     }
 
     public void setStartDate(String startDate) {
@@ -237,9 +261,9 @@ public class Campaign implements Subject {
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(String message) {
         for (Observer observer : observers) {
-            observer.update();
+            observer.update(message);
         }
     }
 

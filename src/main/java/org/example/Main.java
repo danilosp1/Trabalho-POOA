@@ -78,13 +78,15 @@ public class Main {
         master1.addCampaign(c2);
         master1.changeStatus(c1, StatusType.FINALIZADA);
         master1.removeCampaign(c1);
+        player1.addCampaing(c1);
+        c1.printAllPlayers();
 
         System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         System.out.println("Caso de Uso 4: Player gerencia campanhas");
         System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        player1.addCampaing(c1);
         player1.addCampaing(c2);
         player1.printCampaign();
+        master1.changeStatus(c1, StatusType.CANCELADA);
         player1.removeCampaing(c1);
         player1.printCampaign();
 
