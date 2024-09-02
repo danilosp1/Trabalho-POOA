@@ -1,9 +1,11 @@
-package com.model;
+package com.model.users;
 
 import com.enums.CharacterClassType;
 import com.enums.CourseType;
 import com.enums.GenderType;
 import com.enums.RaceType;
+import com.model.Campaign;
+import com.model.CharacterSheet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +29,7 @@ public class Player extends User {
         }
     }
 
-    public void changeSheet(List<CharacterSheet> newSheet){
+    public void setSheetsList(List<CharacterSheet> newSheet){
         sheetsList = newSheet;
     }
 
@@ -54,7 +56,7 @@ public class Player extends User {
 
 
 
-    public void printSheetList() {
+    public void printSheetsList() {
         System.out.println(this.getName() + "'s characters sheet");
         sheetsList.forEach((sheet) -> {
             System.out.println((sheetsList.indexOf(sheet)+1) + " - " + sheet.getName() +
@@ -65,16 +67,5 @@ public class Player extends User {
                     "; Race: " + sheet.getRace() +
                     "; Desciption: " + sheet.getDescription());
         });
-    }
-
-    public void requestSubscription(Campaign campaign, CharacterSheet sheet) {
-        if(campaign != null && sheet != null){
-            RequestSubscription subscription = new RequestSubscription(sheet, java.time.LocalDate.now().toString(), campaign);
-            campaign.addSubscription(subscription);
-
-            System.out.println("Solicitação de inscrição enviada para a campanha " + campaign.getName());
-        } else {
-            System.out.println("Erro: Campanha ou Ficha inválida.");
-        }
     }
 }

@@ -2,9 +2,13 @@ package com.model;
 
 import com.enums.CourseType;
 import com.enums.GenderType;
+import com.interfaces.UserInterface;
+import com.model.users.Admin;
+import com.model.users.Master;
+import com.model.users.Player;
 
 public class UserFactory {
-    public static User createUser(String type, String name, CourseType course, String ra, GenderType genre, int age, String description) {
+    public static UserInterface createUser(String type, String name, CourseType course, String ra, GenderType genre, int age, String description) {
         switch (type.toLowerCase()) {
             case "administrador":
                 return new Admin(name, course, ra, genre, age, description);

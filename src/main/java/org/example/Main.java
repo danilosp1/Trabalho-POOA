@@ -1,17 +1,22 @@
 package org.example;
 
 import com.enums.*;
+import com.interfaces.UserInterface;
 import com.model.*;
+import com.model.users.Admin;
+import com.model.users.Master;
+import com.model.users.Player;
+import com.model.users.User;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static List<User> usuarios = new ArrayList<>();
+    private static List<UserInterface> usuarios = new ArrayList<>();
     private static List<SystemRPG> sistemasDisponiveis = new ArrayList<>();
     private static List<Campaign> campanhas = new ArrayList<>();
-    private static User usuarioLogado = null;
+    private static UserInterface usuarioLogado = null;
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -20,11 +25,11 @@ public class Main {
     }
 
     private static void main1() {
-        Admin admin = new Admin("admin", CourseType.CIENCIA_COMPUTACAO, "811164", GenderType.MASCULINO, 20, "...");
-        Master master1 = new Master("master1", CourseType.CIENCIAS, "873182", GenderType.MASCULINO, 18, "...");
-        Player player1 = new Player("player1", CourseType.DIREITO, "424155", GenderType.FEMININO, 22, "...");
-        Player player2 = new Player("player2", CourseType.ENGENHARIA, "744556", GenderType.FEMININO, 30, "...");
-        Player player3 = new Player("player3", CourseType.FISICA, "955665", GenderType.MASCULINO, 17, "...");
+        Admin admin = (Admin) UserFactory.createUser("administrador", "admin", CourseType.CIENCIA_COMPUTACAO, "811164", GenderType.MASCULINO, 20, "...");
+        Master master1 = (Master) UserFactory.createUser("mestre", "master1", CourseType.CIENCIAS, "873182", GenderType.MASCULINO, 18, "...");
+        Player player1 = (Player) UserFactory.createUser("jogador", "player1", CourseType.DIREITO, "424155", GenderType.FEMININO, 22, "...");
+        Player player2 = (Player) UserFactory.createUser("jogador", "player2", CourseType.ENGENHARIA, "744556", GenderType.FEMININO, 30, "...");
+        Player player3 = (Player) UserFactory.createUser("jogador", "player3", CourseType.FISICA, "955665", GenderType.MASCULINO, 17, "...");
 
         usuarios.add(admin);
         usuarios.add(master1);
@@ -57,10 +62,10 @@ public class Main {
 
 
 
-        master1.createCampaign(c1);
-        master1.createCampaign(c2);
+        master1.addCampaign(c1);
+        master1.addCampaign(c2);
         master1.changeStatus(c1, StatusType.FINALIZADA);
-        master1.deleteCampaign(c1);
+        master1.removeCampaign(c1);
         c1.printAllPlayers();
 
 
@@ -130,7 +135,7 @@ public class Main {
             int age = Integer.parseInt(scanner.nextLine());
             System.out.print("Digite a descrição: ");
             String description = scanner.nextLine();
-            User user = UserFactory.createUser(tipo, name, course, ra, genre, age, description);
+            UserInterface user = UserFactory.createUser(tipo, name, course, ra, genre, age, description);
             usuarios.add(user);
         } else {
             System.out.println("Tipo de usuário inválido.");
@@ -141,8 +146,8 @@ public class Main {
         System.out.print("Digite o RA do usuário: ");
         String ra = scanner.nextLine();
 
-        for (User usuario : usuarios) {
-            if (usuario.getRa().equals(ra)) {
+        for (UserInterface usuario : usuarios) {
+            if (((User) usuario).getRa().equals(ra)) {
                 usuarioLogado = usuario;
                 System.out.println("Login realizado com sucesso!");
                 return;
@@ -194,7 +199,7 @@ public class Main {
         SystemRPG sistema = new SystemRPG(nome, regras);
         sistemasDisponiveis.add(sistema);
 
-        ((Admin) usuarioLogado).createSystem(sistema);
+        Admin.createSystem(sistema);
     }
 
     private static void deletarSystemRPG() {
@@ -203,7 +208,7 @@ public class Main {
 
         for (SystemRPG sistema : sistemasDisponiveis) {
             if (sistema.getName().equals(nome)) {
-                ((Admin) usuarioLogado).deleteSystem(sistema);
+                Admin.deleteSystem(sistema);
                 sistemasDisponiveis.remove(sistema);
                 return;
             }
@@ -215,11 +220,11 @@ public class Main {
         System.out.print("Digite o ID do usuário a ser gerenciado: ");
         String id = scanner.nextLine();
 
-        for (User usuario : usuarios) {
-            if (usuario.getId().toString().equals(id)) {
+        for (UserInterface usuario : usuarios) {
+            if (((User) usuario).getId().toString().equals(id)) {
                 System.out.print("Escolha uma ação (suspender, reativar, deletar): ");
                 String acao = scanner.nextLine();
-                ((Admin) usuarioLogado).manageUser(usuario, acao);
+                ((Admin) usuarioLogado).manageUser((User) usuario, acao);
                 return;
             }
         }
@@ -289,7 +294,7 @@ public class Main {
 
                 for (CharacterSheet ficha : ((Player) usuarioLogado).getCharacterSheet()) {
                     if (ficha.getName().equals(nomeFicha)) {
-                        ((Player) usuarioLogado).requestSubscription(campanha, ficha);
+                        ((Player) usuarioLogado).addCampaing(campanha);
                         return;
                     }
                 }

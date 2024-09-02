@@ -1,30 +1,32 @@
-package com.model;
+package com.model.users;
 import com.enums.CourseType;
 import com.enums.GenderType;
+import com.interfaces.UserInterface;
 
 import java.util.UUID;
 
-public abstract class User {
+public class User implements UserInterface {
     private UUID id;
     private String name;
     private boolean active;
     private CourseType course;
     private String ra;
-    private GenderType genre;
+    private GenderType gender;
     private int age;
     private String description;
 
-    public User(String name, CourseType course, String ra, GenderType genre, int age, String description) {
+    public User(String name, CourseType course, String ra, GenderType gender, int age, String description) {
         this.id = UUID.randomUUID();
         this.name = name;
         this.course = course;
         this.ra = ra;
-        this.genre = genre;
+        this.gender = gender;
         this.age = age;
         this.description = description;
         this.active = true;
     }
 
+    @Override
     public void changeAccount(String newName, CourseType newCourse, GenderType newGenre, int newAge, String newDescription){
         if (!this.isActive()) {
             System.out.println("Não é possível alterar a conta de um usuário inativo.");
@@ -38,7 +40,7 @@ public abstract class User {
             this.setCourse(newCourse);
         }
         if (newGenre != null) {
-            this.setGenre(newGenre);
+            this.setGender(newGenre);
         }
         if (newAge > 0) {
             this.setAge(newAge);
@@ -47,16 +49,6 @@ public abstract class User {
             this.setDescription(newDescription);
         }
         System.out.println("Conta de " + this.getName() + " alterada com sucesso.");
-    }
-
-    public void requestNewSystem(String date, String name, Admin admin){
-        if(!this.isActive()){
-            NewSystemRequest request = new NewSystemRequest(date, name);
-            admin.setNewSystemRequest(request);
-            System.out.println(this.getName() + " solicitou um novo sistema RPG: " + name);
-        } else {
-            System.out.println(this.getName() + " não é um usuário ativo.");
-        }
     }
 
     public UUID getId() {
@@ -87,12 +79,12 @@ public abstract class User {
         this.ra = ra;
     }
 
-    public GenderType getGenre() {
-        return genre;
+    public GenderType getGender() {
+        return gender;
     }
 
-    public void setGenre(GenderType genre) {
-        this.genre = genre;
+    public void setGender(GenderType gender) {
+        this.gender = gender;
     }
 
     public int getAge() {

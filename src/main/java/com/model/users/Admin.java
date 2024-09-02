@@ -1,7 +1,10 @@
-package com.model;
+package com.model.users;
 
 import com.enums.CourseType;
 import com.enums.GenderType;
+import com.interfaces.UserInterface;
+import com.model.Campaign;
+import com.model.SystemRPG;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,10 +12,18 @@ import java.util.List;
 public class Admin extends User {
     private static List<SystemRPG> availableSystems = new ArrayList<>();
     private static List<Campaign> availableCampaign = new ArrayList<>();
-    private static List<User> usuarios = new ArrayList<>();
+    private static List<UserInterface> usuarios = new ArrayList<>();
 
     public Admin(String name, CourseType course, String ra, GenderType genre, int age, String description) {
         super(name, course, ra, genre, age, description);
+    }
+
+    public static List<UserInterface> getUsuarios() {
+        return usuarios;
+    }
+
+    public static void setUsuarios(List<UserInterface> usuarios) {
+        Admin.usuarios = usuarios;
     }
 
     public static void setAvailableCampaign(List<Campaign> availableCampaign) {
@@ -21,14 +32,6 @@ public class Admin extends User {
 
     public static List<Campaign> getAvailableCampaign() {
         return availableCampaign;
-    }
-
-    public static List<User> getUsuarios() {
-        return usuarios;
-    }
-
-    public static void setUsuarios(List<User> usuarios) {
-        Admin.usuarios = usuarios;
     }
 
     public static List<SystemRPG> getAvailableSystems() {
@@ -112,5 +115,13 @@ public class Admin extends User {
         System.out.println("=======================\n");
     }
 
-
+    public static void printUsers() {
+        System.out.println("Users: ");
+        for (int i = 0; i < usuarios.size(); i++) {
+            User u = (User) usuarios.get(i);
+            System.out.print("Usuario " + i+1 + ": ");
+            System.out.println(u.getName() + " - " + u.getRa());
+        }
+        System.out.println("=======================\n");
+    }
 }

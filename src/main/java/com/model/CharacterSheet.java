@@ -2,6 +2,7 @@ package com.model;
 import com.enums.CharacterClassType;
 import com.enums.GenderType;
 import com.enums.RaceType;
+import com.model.users.Player;
 
 import java.util.UUID;
 

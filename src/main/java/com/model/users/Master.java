@@ -1,8 +1,9 @@
-package com.model;
+package com.model.users;
 
 import com.enums.CourseType;
 import com.enums.GenderType;
 import com.enums.StatusType;
+import com.model.Campaign;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,11 @@ public class Master extends User{
 
 
 
-    public void createCampaign(Campaign campaign) {
+    public void addCampaign(Campaign campaign) {
         campaignList.add(campaign);
     }
 
-    public void deleteCampaign(Campaign campaign) {
+    public void removeCampaign(Campaign campaign) {
         campaignList.remove(campaign);
     }
 
@@ -29,13 +30,9 @@ public class Master extends User{
         campaign.setStatus(newStatus);
     }
 
-    public List<Player> allPlayers(Campaign campaign) {
+    public List<Player> getAllCampaignPlayers(Campaign campaign) {
         return campaign.getPlayers();
     }
-
-
-
-    public void changeCampaign(){}
 
     public List<Campaign> getCampaignList() {
         return campaignList;

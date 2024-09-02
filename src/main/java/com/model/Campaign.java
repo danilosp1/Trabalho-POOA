@@ -3,6 +3,8 @@ package com.model;
 import com.enums.StatusType;
 import com.interfaces.Observer;
 import com.interfaces.Subject;
+import com.model.users.Master;
+import com.model.users.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +21,6 @@ public class Campaign implements Subject {
     private StatusType status;
     private String startDate;
     private String endDate;
-    private List<RequestSubscription> subscriptions = new ArrayList<>();
     private List<Player> players = new ArrayList<>();
     private List<CharacterSheet> characters = new ArrayList<>();
     private List<Session> sessions = new ArrayList<>();
@@ -85,7 +86,7 @@ public class Campaign implements Subject {
         this.setStatus(StatusType.CANCELADA);
     }
 
-    public String campaignInfos() {
+    public String printCampaignInfos() {
         return "Informações da campanha: " + this.getName() + "\nMáximo de jogadores: " + this.getMaxPlayers() + "\nMínimero de jogadores: "
                 + this.getMinPlayers() + "\nMestre: " + this.getMaster() + "\nNúmero de sessões restantes: " + this.getSessionsNumber()
                 + "\nDescrição: " + this.getDescription() + "\nStatus: " + this.getStatus() + "\nData de inicio: " + this.getStartDate()
@@ -107,15 +108,6 @@ public class Campaign implements Subject {
             return true;
         }
         return false;
-    }
-
-    public boolean addSubscription(RequestSubscription subscription) {
-        if(subscription == null){
-            return false;
-        }
-
-        subscriptions.add(subscription);
-        return true;
     }
 
     public void printAllPlayers() {
@@ -172,10 +164,6 @@ public class Campaign implements Subject {
         return currentSession;
     }
 
-    public List<RequestSubscription> getSubscriptions() {
-        return subscriptions;
-    }
-
     public List<CharacterSheet> getCharacters() {
         return characters;
     }
@@ -230,10 +218,6 @@ public class Campaign implements Subject {
 
     public void setCharacters(List<CharacterSheet> characters) {
         this.characters = characters;
-    }
-
-    public void setSubscriptions(List<RequestSubscription> subscriptions) {
-        this.subscriptions = subscriptions;
     }
 
     public void setCurrentSession(Session currentSession) {
