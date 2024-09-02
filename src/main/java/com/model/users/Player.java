@@ -54,6 +54,20 @@ public class Player extends User {
         campaignList.remove(campaign);
     }
 
+    public void printCampaign() {
+        System.out.println("Available Campaign: ");
+        for (int i = 0; i < campaignList.size(); i++) {
+            Campaign c = campaignList.get(i);
+            System.out.print("Campanha " + (i+1) + ": " + c.getName());
+            if (c.getMaster() != null) {
+                System.out.println("; Mestre:" + c.getMaster().getName());
+            } else {
+                System.out.println("; Mestre: Sem mestre definido");
+            }
+        }
+        System.out.println("=======================\n");
+    }
+
 
 
     public void printSheetsList() {

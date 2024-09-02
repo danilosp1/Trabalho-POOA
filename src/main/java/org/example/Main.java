@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         main1();
-        main2();
+//        main2();
     }
 
     private static void main1() {
@@ -39,6 +39,7 @@ public class Main {
 
         SystemRPG sistema1 = new SystemRPG("sistema1", "...");
         SystemRPG sistema2 = new SystemRPG("sistema2", "...");
+        SystemRPG sistema3 = new SystemRPG("sistema3", "...");
 
         sistemasDisponiveis.add(sistema1);
         sistemasDisponiveis.add(sistema2);
@@ -46,34 +47,46 @@ public class Main {
 
         Campaign c1 = new Campaign("campanha1", 10, 5, master1, 3, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", sistema1);
         Campaign c2 = new Campaign("campanha2", 20, 10, master1, 5, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", sistema2);
+        Campaign c3 = new Campaign("campanha3", 20, 10, master1, 5, "...", StatusType.ATIVA, "01/01/2025", "30/01/2025", sistema2);
         campanhas.add(c1);
         campanhas.add(c2);
 
 
         Admin.setAvailableSystems(sistemasDisponiveis);
         Admin.setAvailableCampaign(campanhas);
-        Admin.printAvailableCampaign();
-        Admin.printAvailableSystems();
 
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("Caso de Uso 1: Admin gerenciar Campanhas");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        Admin.printAvailableCampaign();
         Admin.deleteCampaign(c1);
-        Admin.deleteSystem(sistema1);
+        Admin.createCampaign(c3);
         Admin.printAvailableCampaign();
+
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("Caso de Uso 2: Admin gerenciar Sistemas");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        Admin.printAvailableSystems();
+        Admin.deleteSystem(sistema1);
+        Admin.createSystem(sistema3);
         Admin.printAvailableSystems();
 
-
-
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("Caso de Uso 3: Mestre gerenciar Campanhas");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         master1.addCampaign(c1);
         master1.addCampaign(c2);
         master1.changeStatus(c1, StatusType.FINALIZADA);
         master1.removeCampaign(c1);
-        c1.printAllPlayers();
 
-
-
-
-
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("Caso de Uso 4: Player gerencia campanhas");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         player1.addCampaing(c1);
         player1.addCampaing(c2);
+        player1.printCampaign();
+        player1.removeCampaing(c1);
+        player1.printCampaign();
 
     }
 

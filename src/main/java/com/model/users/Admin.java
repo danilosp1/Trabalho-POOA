@@ -96,7 +96,7 @@ public class Admin extends User {
     public static void printAvailableSystems() {
         System.out.println("Available Systems: ");
         for (int i = 0; i < availableSystems.size(); i++) {
-            System.out.println("Sistema " + i+1 + ": " + availableSystems.get(i).getName());
+            System.out.println("Sistema " + (i+1) + ": " + availableSystems.get(i).getName());
         }
         System.out.println("=======================\n");
     }
@@ -105,7 +105,7 @@ public class Admin extends User {
         System.out.println("Available Campaign: ");
         for (int i = 0; i < availableCampaign.size(); i++) {
             Campaign c = availableCampaign.get(i);
-            System.out.print("Campanha " + i+1 + ": " + c.getName());
+            System.out.print("Campanha " + (i+1) + ": " + c.getName());
             if (c.getMaster() != null) {
                 System.out.println("; Mestre:" + c.getMaster().getName());
             } else {
