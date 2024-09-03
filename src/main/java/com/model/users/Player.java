@@ -48,17 +48,26 @@ public class Player extends User implements Observer {
     }
 
     public void addCampaing(Campaign campaign) {
-        campaignList.add(campaign);
-        campaign.addPlayer(this);
+        boolean addPlayer = campaign.addPlayer(this);
 
-        if (campaign.getMaster() != null) {
-            campaign.attach(campaign.getMaster());
+        if(addPlayer) {
+            campaignList.add(campaign);
+
+            if (campaign.getMaster() != null) {
+                campaign.attach(campaign.getMaster());
+            }
+        } else {
+            System.out.println("Não foi possível entrar na campanha.");
         }
     }
 
     public void removeCampaing(Campaign campaign) {
-        campaignList.remove(campaign);
-        campaign.removePlayer(this);
+        boolean removeCampaing = campaign.removePlayer(this);
+        if(removeCampaing) {
+            campaignList.remove(campaign);
+        } else {
+            System.out.println("Não foi possível sair da campanha.");
+        }
     }
 
     public void printCampaign() {

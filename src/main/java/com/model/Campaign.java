@@ -101,9 +101,13 @@ public class Campaign implements Subject {
         return true;
     }
 
-    public void addPlayer(Player player) {
+    public boolean addPlayer(Player player) {
         if (player == null) {
-            return;
+            return false;
+        }
+
+        if(this.getPlayers().contains(player) || this.getPlayers().size() >= this.getMaxPlayers()) {
+            return false;
         }
 
         players.add(player);
@@ -111,6 +115,8 @@ public class Campaign implements Subject {
         if (this.master != null) {
             this.master.update("O jogador " + player.getName() + " entrou na campanha " + this.getName());
         }
+
+        return true;
     }
 
     public boolean removePlayer(Player player) {

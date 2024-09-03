@@ -42,7 +42,7 @@ public class Master extends User implements Observer {
 
     public void printCampaignPlayers(Campaign campaign) {
         List<Player> players = getAllCampaignPlayers(campaign);
-        if(players.size() > 0) {
+        if(!players.isEmpty()) {
             System.out.println("Players da campanha " + campaign.getName() + ": ");
             for (int i = 0; i < players.size(); i++) {
                 Player p = players.get(i);
