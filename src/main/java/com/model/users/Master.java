@@ -11,7 +11,7 @@ import java.util.List;
 
 
 public class Master extends User implements Observer {
-    private List<Campaign> campaignList = new ArrayList<>();
+    private final List<Campaign> campaignList = new ArrayList<>();
 
     public Master(String name, CourseType course, String ra, GenderType genre, int age, String description) {
         super(name, course, ra, genre, age, description);

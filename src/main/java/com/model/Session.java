@@ -3,10 +3,10 @@ package com.model;
 import java.util.*;
 
 public class Session {
-    private UUID id;
+    private final UUID id;
     private String date;
     private String description;
-    private List<CharacterSheet> characters = new ArrayList<CharacterSheet>();
+    private final List<CharacterSheet> characters = new ArrayList<CharacterSheet>();
     private boolean finished;
 
     public Session(String date, String description) {

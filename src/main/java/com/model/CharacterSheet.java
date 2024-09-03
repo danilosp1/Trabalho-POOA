@@ -7,7 +7,7 @@ import com.model.users.Player;
 import java.util.UUID;
 
 public class CharacterSheet {
-    private UUID id;
+    private final UUID id;
     private String name;
     private int level;
     private GenderType gender;

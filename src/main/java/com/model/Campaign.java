@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class Campaign implements Subject {
-    private UUID id;
+    private final UUID id;
     private String name;
     private int maxPlayers;
     private int minPlayers;
@@ -23,10 +23,10 @@ public class Campaign implements Subject {
     private String endDate;
     private List<Player> players = new ArrayList<>();
     private List<CharacterSheet> characters = new ArrayList<>();
-    private List<Session> sessions = new ArrayList<>();
+    private final List<Session> sessions = new ArrayList<>();
     private Session currentSession;
     private SystemRPG systemRPG;
-    private List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     public Campaign(String name, int maxPlayers, int minPlayers, Master master, int sessionsNumber, String description, StatusType status, String startDate, String endDate, SystemRPG systemRPG) {
         this.id = UUID.randomUUID();

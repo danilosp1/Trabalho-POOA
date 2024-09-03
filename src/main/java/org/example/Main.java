@@ -83,7 +83,7 @@ public class Main {
         master1.removeCampaign(c1);
 
         System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.println("Caso de Uso 4: Player gerencia campanhas");
+        System.out.println("Caso de Uso 4: Player gerenciar campanhas");
         System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         player1.addCampaing(c2);
         player1.printCampaign();

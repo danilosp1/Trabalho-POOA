@@ -3,7 +3,7 @@ package com.model;
 import java.util.UUID;
 
 public class SystemRPG {
-    private UUID id;
+    private final UUID id;
     private String name;
     private String rules;
 

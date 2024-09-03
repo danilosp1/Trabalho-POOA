@@ -6,7 +6,7 @@ import com.interfaces.UserInterface;
 import java.util.UUID;
 
 public class User implements UserInterface {
-    private UUID id;
+    private final UUID id;
     private String name;
     private boolean active;
     private CourseType course;

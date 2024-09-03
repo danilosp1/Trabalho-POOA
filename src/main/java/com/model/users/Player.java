@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Player extends User implements Observer {
     private List<CharacterSheet> sheetsList = new ArrayList<>();
-    private List<Campaign> campaignList = new ArrayList<>();
+    private final List<Campaign> campaignList = new ArrayList<>();
 
     public Player(String name, CourseType course, String ra, GenderType genre, int age, String description) {
         super(name, course, ra, genre, age, description);
