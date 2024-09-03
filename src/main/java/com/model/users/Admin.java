@@ -3,8 +3,10 @@ package com.model.users;
 import com.enums.CourseType;
 import com.enums.GenderType;
 import com.interfaces.UserInterface;
-import com.model.Campaign;
-import com.model.SystemRPG;
+import com.model.*;
+import com.model.managers.CampaignManager;
+import com.model.managers.SystemManager;
+import com.model.managers.UserManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,15 @@ public class Admin extends User {
     private static List<SystemRPG> availableSystems = new ArrayList<>();
     private static List<Campaign> availableCampaign = new ArrayList<>();
     private static List<UserInterface> usuarios = new ArrayList<>();
+    private final CampaignManager campaignManager;
+    private final SystemManager systemManager;
+    private final UserManager userManager;
 
-    public Admin(String name, CourseType course, String ra, GenderType genre, int age, String description) {
+    public Admin(String name, CourseType course, String ra, GenderType genre, int age, String description, CampaignManager campaignManager, SystemManager systemManager, UserManager userManager) {
         super(name, course, ra, genre, age, description);
+        this.campaignManager = campaignManager;
+        this.systemManager = systemManager;
+        this.userManager = userManager;
     }
 
     public static List<UserInterface> getUsuarios() {
@@ -42,86 +50,35 @@ public class Admin extends User {
         Admin.availableSystems = availableSystems;
     }
 
-    public static void createSystem(SystemRPG system){
-        if (!availableSystems.contains(system)) {
-            availableSystems.add(system);
-            System.out.println("Sistema RPG " + system.getName() + " criado e adicionado à lista de sistemas disponíveis.");
-        } else {
-            System.out.println("Sistema RPG " + system.getName() + " já existe na lista de sistemas disponíveis.");
-        }
+    public void createSystem(SystemRPG system) {
+        systemManager.createSystem(system);
     }
 
-    public static void deleteSystem(SystemRPG system){
-        if (availableSystems.contains(system)) {
-            availableSystems.remove(system);
-            System.out.println("Sistema RPG " + system.getName() + " removido da lista de sistemas disponíveis.");
-        } else {
-            System.out.println("Sistema RPG " + system.getName() + " não encontrado na lista de sistemas disponíveis.");
-        }
+    public void deleteSystem(SystemRPG system) {
+        systemManager.deleteSystem(system);
     }
 
-    public static void createCampaign(Campaign campaign){
-        if (!availableCampaign.contains(campaign)) {
-            availableCampaign.add(campaign);
-            System.out.println("Campanha " + campaign.getName() + " criada e adicionada à lista de campanhas disponíveis.");
-        } else {
-            System.out.println("Campanha " + campaign.getName() + " já existe na lista de campanhas disponíveis.");
-        }
+    public void createCampaign(Campaign campaign) {
+        campaignManager.createCampaign(campaign);
     }
 
-    public static void deleteCampaign(Campaign campaign){
-        if (availableCampaign.contains(campaign)) {
-            availableCampaign.remove(campaign);
-            System.out.println("Campanha " + campaign.getName() + " removida da lista de campanhas disponíveis.");
-        } else {
-            System.out.println("Campanha " + campaign.getName() + " não encontrada na lista de campanhas disponíveis.");
-        }
+    public void deleteCampaign(Campaign campaign) {
+        campaignManager.deleteCampaign(campaign);
     }
 
-    public void manageUser(User user, String acao){
-        switch (acao.toLowerCase()) {
-            case "suspender":
-                System.out.println("Usuário " + user.getName() + " suspenso.");
-                user.setActive(false);
-                break;
-            case "reativar":
-                System.out.println("Usuário " + user.getName() + " reativado.");
-                user.setActive(true);
-                break;
-            default:
-                System.out.println("Ação desconhecida para gerenciar o usuário.");
-        }
+    public void manageUser(User user, String action) {
+        userManager.manageUser(user, action);
     }
 
-    public static void printAvailableSystems() {
-        System.out.println("Available Systems: ");
-        for (int i = 0; i < availableSystems.size(); i++) {
-            System.out.println("Sistema " + (i+1) + ": " + availableSystems.get(i).getName());
-        }
-        System.out.println("=======================\n");
+    public void printAvailableSystems() {
+        systemManager.printAvailableSystems();
     }
 
-    public static void printAvailableCampaign() {
-        System.out.println("Available Campaign: ");
-        for (int i = 0; i < availableCampaign.size(); i++) {
-            Campaign c = availableCampaign.get(i);
-            System.out.print("Campanha " + (i+1) + ": " + c.getName());
-            if (c.getMaster() != null) {
-                System.out.println("; Mestre:" + c.getMaster().getName());
-            } else {
-                System.out.println("; Mestre: Sem mestre definido");
-            }
-        }
-        System.out.println("=======================\n");
+    public void printAvailableCampaigns() {
+        campaignManager.printAvailableCampaigns();
     }
 
-    public static void printUsers() {
-        System.out.println("Users: ");
-        for (int i = 0; i < usuarios.size(); i++) {
-            User u = (User) usuarios.get(i);
-            System.out.print("Usuario " + i+1 + ": ");
-            System.out.println(u.getName() + " - " + u.getRa());
-        }
-        System.out.println("=======================\n");
+    public void printUsers() {
+        userManager.printUsers();
     }
 }

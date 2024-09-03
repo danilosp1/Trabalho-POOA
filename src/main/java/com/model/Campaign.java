@@ -3,6 +3,8 @@ package com.model;
 import com.enums.StatusType;
 import com.interfaces.Observer;
 import com.interfaces.Subject;
+import com.model.managers.PlayerManager;
+import com.model.managers.SessionManager;
 import com.model.users.Master;
 import com.model.users.Player;
 
@@ -11,11 +13,11 @@ import java.util.List;
 import java.util.UUID;
 
 public class Campaign implements Subject {
-    private UUID id;
+    private final UUID id;
     private String name;
-    private int maxPlayers;
-    private int minPlayers;
-    private Master master;
+    private final int maxPlayers;
+    private final int minPlayers;
+    private final Master master;
     private int sessionsNumber;
     private String description;
     private StatusType status;
@@ -26,7 +28,7 @@ public class Campaign implements Subject {
     private List<Session> sessions = new ArrayList<>();
     private Session currentSession;
     private SystemRPG systemRPG;
-    private List<Observer> observers = new ArrayList<>();
+    private final List<Observer> observers = new ArrayList<>();
 
     public Campaign(String name, int maxPlayers, int minPlayers, Master master, int sessionsNumber, String description, StatusType status, String startDate, String endDate, SystemRPG systemRPG) {
         this.id = UUID.randomUUID();
@@ -36,7 +38,6 @@ public class Campaign implements Subject {
         this.master = master;
         this.sessionsNumber = sessionsNumber;
         this.description = description;
-        this.currentSession = null;
         this.status = status;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -44,45 +45,44 @@ public class Campaign implements Subject {
         this.attach(master);
     }
 
-    public void addSession(Session session) {
-        if (!sessions.contains(session)) {
-            sessions.add(session);
+    private final SessionManager sessionManager = new SessionManager(this);
+
+    public void startSession(Session session) {
+        sessionManager.startSession(session);
+    }
+
+    public void endSession(Session session) {
+        sessionManager.endSession(session);
+    }
+
+    private PlayerManager playerManager = new PlayerManager(this);
+
+    public boolean addPlayer(Player player) {
+        return playerManager.addPlayer(player);
+    }
+
+    public boolean removePlayer(Player player) {
+        return playerManager.removePlayer(player);
+    }
+
+    private void notifyChange(String message) {
+        notifyObservers("O status da campanha " + this.getName() + " mudou para " + message + ".");
+    }
+
+    public void notifyMasterPlayerJoined(Player player) {
+        if (master != null) {
+            master.update("O jogador " + player.getName() + " entrou na campanha " + this.getName());
         }
     }
 
-    public void startSession(Session session){
-        if (sessions.contains(session) && !session.isFinished()) {
-            this.setStatus(StatusType.ATIVA);
-            this.setCurrentSession(session);
-            System.out.println("Sessão iniciada com sucesso para a campanha " + this.getName());
-        } else {
-            System.out.println("Erro: Sessão não encontrada ou já finalizada na campanha: " + this.getName());
-        }
-
-        this.setStatus(StatusType.ATIVA);
-    }
-
-    public void endSession(Session session){
-        if(this.getStatus() != StatusType.ATIVA){
-            System.out.println("É necessário estar com sessão ativa para que seja finalizada.");
-        } else if (currentSession != session) {
-            System.out.println("Essa sessão não está acontecendo.");
-        } else if (session.isFinished()) {
-            System.out.println("Essa sessão já foi finalizada.");
-        } else if (sessions.contains(session)) {
-            System.out.println("Sessão não encontrada na campanha " + this.getName());
-        } else {
-            if(sessionsNumber == 0) {
-                this.setStatus(StatusType.FINALIZADA);
-            } else {
-                this.setSessionsNumber(sessionsNumber - 1);
-            }
-            session.setFinished(true);
+    public void notifyMasterPlayerLeft(Player player) {
+        if (master != null) {
+            master.update("O jogador " + player.getName() + " saiu da campanha " + this.getName());
         }
     }
 
-    public void cancelCampaign(){
-        this.setStatus(StatusType.CANCELADA);
+    public void cancelCampaign() {
+        setStatus(StatusType.CANCELADA);
     }
 
     public String printCampaignInfos() {
@@ -92,51 +92,23 @@ public class Campaign implements Subject {
                 + "\nData de fim: " + this.getEndDate();
     }
 
-    public boolean addCharacter(CharacterSheet characterSheet){
-        if (characterSheet == null) {
-            return false;
+    @Override
+    public void attach(Observer observer) {
+        if (!observers.contains(observer)) {
+            observers.add(observer);
         }
-
-        characters.add(characterSheet);
-        return true;
     }
 
-    public boolean addPlayer(Player player) {
-        if (player == null) {
-            return false;
-        }
-
-        if(this.getPlayers().contains(player) || this.getPlayers().size() >= this.getMaxPlayers()) {
-            return false;
-        }
-
-        players.add(player);
-        attach(player);  // Adiciona o jogador como observador
-        if (this.master != null) {
-            this.master.update("O jogador " + player.getName() + " entrou na campanha " + this.getName());
-        }
-
-        return true;
+    @Override
+    public void detach(Observer observer) {
+        observers.remove(observer);
     }
 
-    public boolean removePlayer(Player player) {
-        if (player != null && players.contains(player)) {
-            players.remove(player);
-            detach(player);  // Remove o jogador como observador
-            if (this.master != null) {
-                this.master.update("O jogador " + player.getName() + " saiu da campanha " + this.getName());
-            }
-            return true;
+    @Override
+    public void notifyObservers(String message) {
+        for (Observer observer : observers) {
+            observer.update(message);
         }
-        return false;
-    }
-
-    public boolean removeCharacter(CharacterSheet characterSheet) {
-        if (characterSheet != null && characters.contains(characterSheet)) {
-            characters.remove(characterSheet);
-            return true;
-        }
-        return false;
     }
 
     public UUID getId() {
@@ -199,18 +171,6 @@ public class Campaign implements Subject {
         this.name = name;
     }
 
-    public void setMaxPlayers(int maxPlayers) {
-        this.maxPlayers = maxPlayers;
-    }
-
-    public void setMinPlayers(int minPlayers) {
-        this.minPlayers = minPlayers;
-    }
-
-    public void setMaster(Master master) {
-        this.master = master;
-    }
-
     public void setSessionsNumber(int sessionsNumber) {
         this.sessionsNumber = sessionsNumber;
     }
@@ -221,7 +181,7 @@ public class Campaign implements Subject {
 
     public void setStatus(StatusType status) {
         this.status = status;
-        notifyObservers("O status da campanha " + this.getName() + " mudou para " + this.getStatus() + ".");
+        notifyChange(this.getStatus().toString());
     }
 
     public void setStartDate(String startDate) {
@@ -244,30 +204,7 @@ public class Campaign implements Subject {
         this.currentSession = currentSession;
     }
 
-    @Override
-    public void attach(Observer observer) {
-        if (!observers.contains(observer)) {
-            observers.add(observer);
-        }
-    }
-
-    @Override
-    public void detach(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers(String message) {
-        for (Observer observer : observers) {
-            observer.update(message);
-        }
-    }
-
     public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void setPlayers(List<Player> players) {
-        this.players = players;
+        return this.players;
     }
 }
