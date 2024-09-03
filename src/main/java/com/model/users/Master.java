@@ -18,7 +18,9 @@ public class Master extends User implements Observer {
     }
 
     public void addCampaign(Campaign campaign) {
-        campaignList.add(campaign);
+        if(!campaignList.contains(campaign)){
+            campaignList.add(campaign);
+        }
     }
 
     public void removeCampaign(Campaign campaign) {
@@ -26,6 +28,14 @@ public class Master extends User implements Observer {
     }
 
     public void changeStatus(Campaign campaign, StatusType newStatus) {
+        if(!campaignList.contains(campaign)){
+            System.out.println("Campanha não encontrada.");
+            return;
+        }
+        if(campaign.getPlayers().size() < campaign.getMinPlayers() && newStatus == StatusType.ATIVA) {
+            System.out.println("A campanha não possui o mínimo de jogadores.");
+            return;
+        }
         campaign.setStatus(newStatus);
     }
 

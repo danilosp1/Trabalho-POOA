@@ -98,7 +98,6 @@ public class Player extends User implements Observer {
                     "; Desciption: " + sheet.getDescription());
         });
     }
-
     @Override
     public void update(String message) {
         System.out.println("Jogador " + this.getName() + " foi notificado: " + message);
