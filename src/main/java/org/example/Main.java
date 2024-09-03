@@ -79,6 +79,7 @@ public class Main {
         master1.changeStatus(c1, StatusType.FINALIZADA);
         player1.addCampaing(c1);
         master1.printCampaignPlayers(c1);
+        master1.printAllCampaign();
         master1.removeCampaign(c1);
 
         System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");

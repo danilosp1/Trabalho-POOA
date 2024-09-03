@@ -17,8 +17,6 @@ public class Master extends User implements Observer {
         super(name, course, ra, genre, age, description);
     }
 
-
-
     public void addCampaign(Campaign campaign) {
         campaignList.add(campaign);
     }
@@ -48,7 +46,7 @@ public class Master extends User implements Observer {
             System.out.println("Players da campanha " + campaign.getName() + ": ");
             for (int i = 0; i < players.size(); i++) {
                 Player p = players.get(i);
-                System.out.print("Player " + i+1);
+                System.out.print("Player " + (i+1));
                 System.out.print(": " + p.getName());
                 System.out.println(" - " + p.getRa());
             }
@@ -56,6 +54,16 @@ public class Master extends User implements Observer {
         } else {
             System.out.println("Mestre não é responsável pela campanha ou não há players ainda.");
         }
+    }
+
+    public void printAllCampaign() {
+        System.out.println("Lista de campanhas:");
+        for (int i = 0; i < getCampaignList().size(); i++) {
+            Campaign c = getCampaignList().get(i);
+            System.out.print("Campanha " + (i+1));
+            System.out.println(": " + c.getName());
+        }
+        System.out.println("=======================\n");
     }
 
     @Override

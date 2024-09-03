@@ -133,16 +133,6 @@ public class Campaign implements Subject {
         return false;
     }
 
-    public void printAllPlayers() {
-        System.out.println("\nPlayers:");
-        for (int i = 0; i < players.size(); i++) {
-            System.out.print("Player " + i+1);
-            System.out.print(": " + players.get(i).getName());
-            System.out.println(" - " + players.get(i).getRa());
-        }
-        System.out.println("=======================\n");
-    }
-
     public UUID getId() {
         return id;
     }
