@@ -32,11 +32,30 @@ public class Master extends User implements Observer {
     }
 
     public List<Player> getAllCampaignPlayers(Campaign campaign) {
-        return campaign.getPlayers();
+        if(getCampaignList().contains(campaign)) {
+            return campaignList.get(campaignList.indexOf(campaign)).getPlayers();
+        }
+        return new ArrayList<>();
     }
 
     public List<Campaign> getCampaignList() {
         return campaignList;
+    }
+
+    public void printCampaignPlayers(Campaign campaign) {
+        List<Player> players = getAllCampaignPlayers(campaign);
+        if(players.size() > 0) {
+            System.out.println("Players da campanha " + campaign.getName() + ": ");
+            for (int i = 0; i < players.size(); i++) {
+                Player p = players.get(i);
+                System.out.print("Player " + i+1);
+                System.out.print(": " + p.getName());
+                System.out.println(" - " + p.getRa());
+            }
+            System.out.println("=======================\n");
+        } else {
+            System.out.println("Mestre não é responsável pela campanha ou não há players ainda.");
+        }
     }
 
     @Override
